@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+         http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+          http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-4.3.xsd
+          http://www.springframework.org/schema/mvc
+         http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+        ">
+    <!--自动扫描包，使注解生效 有IOC统一管理-->
+    <context:component-scan base-package="com.project.appManager.controller"/>
+    <!--不过滤静态资源  .css .js .html .mp3-->
+    <mvc:default-servlet-handler/>
+    <!--
+       注解驱动op支持
+       支持mvc注解驱动
+       在spring中一般采用@RequestMapping注解来完成映射关系
+       要想使@RequestMapping注解生效
+       必须向上下文中注册DefaultAnnotationHandlerMapping
+       和一个AnnotationMethodHandlerAdapter实例
+       这两个实例分别在类级别和方法级别处理。
+       而annotation-driven配置帮助我们自动完成上述两个实例的注入。
+    -->
+    <mvc:annotation-driven/>
+
+    <!--视图解析器:DispatcherServlet给他的ModelAndView  模板引擎 thymeleaf Freemaker-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="internalResourceViewResolver">
+        <!--前缀-->
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <!--后缀-->
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 文件解析器 id固定-->
+    <bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >
+        <property name="maxUploadSize" value="52428800" /> <!--50m-->
+        <property name="defaultEncoding" value="UTF-8" />
+    </bean>
+</beans>

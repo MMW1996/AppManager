@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<img src="https://mmw-1996.oss-cn-hangzhou.aliyuncs.com/root/images/1.jpg" alt="">
+</body>
+<script>
+    const promise1 = new Promise((resolve,reject)=>{
+        setTimeout(function (){
+            resolve("hello world");
+            reject("Error Date")
+        },1000)
+    }).then(data=>{
+        console.log(data);
+    }).catch(error=>{
+        console.log(error);
+    })
+
+    const promise2 = new Promise((resolve,reject)=>{
+        setTimeout(function () {
+            resolve("hello world")
+        },1000)
+    }).then(data=>{
+        console.log(data); // hello world
+        return Promise.resolve(data + ' 111 ')
+    }).then(data=>{
+        console.log(data); // hello world 111
+        return Promise.resolve(data + ' 222 ')
+    }).then(data=>{
+        console.log(data); // hello world 111  222
+        return Promise.reject(data + 'error')
+    }).then(data=>{
+        console.log(data) // 这里由于上面的reject 直接回调的是下面的catch
+        return Promise.resolve(data + ' rejected ')
+    }).catch(data=>{
+        console.log(data); // hello world 111  222 error
+        return Promise.resolve(data + ' 333 ')
+    }).then(data=>{
+        console.log(data); // hello world 111  222 error 333
+        return Promise.resolve(data + ' 444 ')
+    })
+</script>
+</html>
