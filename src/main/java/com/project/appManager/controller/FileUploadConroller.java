@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import java.util.UUID;
 
 /**
@@ -25,10 +26,19 @@ import java.util.UUID;
  */
 @Controller
 public class FileUploadConroller {
-    private static final String endpoint = "https://oss-cn-hangzhou.aliyuncs.com";
-    private static final String accessId = "LTAI5tFYEnuqZuvAdrDk9NLg";
-    private static final String accessSecret = "w37FHHTkhoMKKTrXYqRyDPtqOWXiKQ";
-    private static final String bucketName = "mmw-1996";
+    private static String endpoint;
+    private static String accessId;
+    private static String accessSecret;
+    private static String bucketName;
+
+    static {
+        ResourceBundle bundle = ResourceBundle.getBundle("OSS.properties");
+        endpoint = bundle.getString("endpoint");
+        accessId = bundle.getString("accessId");
+        accessSecret = bundle.getString("accessSecret");
+        bucketName = bundle.getString("bucketName");
+
+    }
     @RequestMapping("/upload")
     public String upload(@RequestParam(value = "file")CommonsMultipartFile file){
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessId, accessSecret);

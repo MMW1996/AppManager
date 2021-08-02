@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 /**
  * @author:MMW
@@ -19,10 +20,18 @@ import java.util.Date;
  */
 @SuppressWarnings("All")
 public class OSSFileUploadUtil {
-    private static final String endpoint = "https://oss-cn-hangzhou.aliyuncs.com";
-    private static final String accessId = "LTAI5tFYEnuqZuvAdrDk9NLg";
-    private static final String accessSecret = "w37FHHTkhoMKKTrXYqRyDPtqOWXiKQ";
-    private static final String bucketName = "mmw-1996";
+    private static String endpoint;
+    private static String accessId;
+    private static String accessSecret;
+    private static String bucketName;
+
+    static {
+        ResourceBundle bundle = ResourceBundle.getBundle("OSS.properties");
+        endpoint = bundle.getString("endpoint");
+        accessId = bundle.getString("accessId");
+        accessSecret = bundle.getString("accessSecret");
+        bucketName = bundle.getString("bucketName");
+    }
     private static OSS ossClient = new OSSClientBuilder().build(endpoint, accessId, accessSecret);
 
     /**
